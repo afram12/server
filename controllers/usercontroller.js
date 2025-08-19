@@ -48,10 +48,13 @@ class usercontroller {
             var token = jwt.sign({ ID: user._id }, process.env.JWT_SECRET, { expiresIn: "2d" });
             console.log(token)
 
-            //send token in http-only cookie
-            res.cookie("token", token, {
-                httpOnly: true,
-            });
+           // Inside login controller
+                res.cookie("token", token, {
+                    httpOnly: true,
+                    secure: true, // ✅ required for HTTPS (Render + Netlify are HTTPS)
+                    sameSite: "None", // ✅ required for cross-site cookies
+                    maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+                });
 
             // Success
             res
