@@ -3,7 +3,7 @@ const Live_url =
   "mongodb+srv://tanishk107:tanishk107@cluster0.htndl7i.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const connectDb = async () => {
   return mongoose
-    .connect(Live_url)
+    .connect(process.env.LIVE_URL)
     .then(() => {
       console.log("connection stabilished successfully");
     })

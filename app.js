@@ -7,6 +7,8 @@ const fileUpload = require('express-fileupload')
 const  cookieParser = require ('cookie-parser')
 const cors = require("cors");
 
+require("dotenv").config();
+
 app.use(cookieParser())
 
 //token get cookie
@@ -30,4 +32,4 @@ app.use(express.json())
 
 
 app.use('/api', web) //localhost:4000/api/
-app.listen(port, console.log('server shuru ho gaya he ',port))
+app.listen(process.env.PORT, console.log('server started at  ',port))
