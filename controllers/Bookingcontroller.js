@@ -1,4 +1,4 @@
-const Booking = require("../models/Booking"); // Booking model
+const Booking = require("../models/booking"); // Booking model
 const Course = require("../models/course"); // Course model
 
 class BookingController {
