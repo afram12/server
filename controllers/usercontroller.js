@@ -29,7 +29,7 @@ class usercontroller {
       console.log(error);
     }
   };
-  static login = async (req, res) => {
+ static login = async (req, res) => {
     try {
       const { email, password } = req.body;
 
@@ -57,17 +57,11 @@ class usercontroller {
       console.log("Generated token:", token);
 
       // Send token in HTTP-Only cookie
-      //   res.cookie("token", token, {
-      //     httpOnly: true,
-      //     secure: process.env.NODE_ENV === "production", // only use secure cookies in production
-      //     sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
-      //     maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
-      //   });
       res.cookie("token", token, {
         httpOnly: true,
-        secure: true, // ✅ required for HTTPS (Render + Netlify are HTTPS)
-        sameSite: "None", // ✅ required for cross-site cookies
-        maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
+        secure: process.env.NODE_ENV === "production", // only use secure cookies in production
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
+        maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
       });
 
       // Respond with user info
@@ -77,6 +71,7 @@ class usercontroller {
         name: user.name,
         email: user.email,
       });
+
     } catch (error) {
       console.error("Login error:", error);
       res.status(500).json({ message: "Server error", error });
@@ -98,5 +93,6 @@ class usercontroller {
       console.log("error");
     }
   };
+
 }
 module.exports = usercontroller;
