@@ -33,7 +33,7 @@ router.delete('/coursedelete/:id', coursecontroller.coursedelete)
 
 //user
 router.post('/register', usercontroller.register)
-router.post('/login', usercontroller.login)
+router.post('/loogin', usercontroller.login)
 router.get('/profile', checkAuth,usercontroller.profile)
 router.get('/logout', checkAuth,usercontroller.logout)
 
