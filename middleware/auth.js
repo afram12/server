@@ -7,7 +7,7 @@ const checkAuth=async(req,res,next)=>{
     //console.log(token)
     if (!token)return res.status(401).json({message : "Unauthorized"});
     try {
-        const decoded = jwt.verify(token, 'BETN1CS22107');
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
         // console.log(decoded)
 
         //fetch full user from db 
