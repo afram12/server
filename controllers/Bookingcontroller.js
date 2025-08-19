@@ -8,7 +8,8 @@ class BookingController {
       const { courseId } = req.params;
       const userId = req.user._id; // assume JWT middleware sets req.user
       const course = await Course.findById(courseId);
-
+      console.log(userId)
+      console.log(course,"kk")
       if (!course) {
         return res.status(404).json({ message: "Course not found" });
       }
