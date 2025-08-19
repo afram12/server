@@ -14,7 +14,7 @@ app.use(cookieParser())
 //token get cookie
 app.use(
     cors({
-    origin: "http://localhost:5173", //your frontend domain
+    origin: "https://coursebookingsystem.netlify.app", //your frontend domain
     credentials: true, //allow credentials (cookies)
     }));
 
