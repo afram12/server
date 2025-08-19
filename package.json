@@ -8,7 +8,7 @@
   "main": "app.js",
   "scripts": {
     "tanishk": "nodemon app.js",
-    "start":"node app.js"
+    "start": "node app.js"
   },
   "dependencies": {
     "bcrypt": "^6.0.0",

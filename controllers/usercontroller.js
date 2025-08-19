@@ -29,47 +29,51 @@ class usercontroller {
       console.log(error);
     }
   };
-  static login = async (req, res) => {
+ static login = async (req, res) => {
     try {
-      // console.log(req.body)
       const { email, password } = req.body;
 
+      // Find user by email
       const user = await userModel.findOne({ email });
-      //console.log(user)
       if (!user) {
         return res.status(400).json({ message: "Invalid credentials" });
       }
 
+      // Compare password
       const isMatch = await bcrypt.compare(password, user.password);
       if (!isMatch) {
-        return res.status(400).json({ message: " Invalid credentials " });
+        return res.status(400).json({ message: "Invalid credentials" });
       }
-      //console.log(isMatch)
-      //token create
-      const token = jwt.sign(
-        { ID: user._id },
-        process.env.JWT_SECRET,
-        { expiresIn: "2d" } //2 din me token expire ho jayega
-      );
-      //  console.log(token)
+
+      // Check if JWT_SECRET exists
+      const secret = process.env.JWT_SECRET;
+      if (!secret) {
+        console.error("JWT_SECRET is not defined in environment variables!");
+        return res.status(500).json({ message: "Server configuration error" });
+      }
+
+      // Create JWT token
+      const token = jwt.sign({ ID: user._id }, secret, { expiresIn: "2d" });
+      console.log("Generated token:", token);
 
       // Send token in HTTP-Only cookie
-      // Inside login controller
       res.cookie("token", token, {
         httpOnly: true,
-        secure: true, // ✅ required for HTTPS (Render + Netlify are HTTPS)
-        sameSite: "None", // ✅ required for cross-site cookies
+        secure: process.env.NODE_ENV === "production", // only use secure cookies in production
+        sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax",
         maxAge: 2 * 24 * 60 * 60 * 1000, // 2 days
       });
 
+      // Respond with user info
       res.status(200).json({
         message: "Login successful",
         role: user.role,
         name: user.name,
         email: user.email,
       });
+
     } catch (error) {
-      console.log(error);
+      console.error("Login error:", error);
       res.status(500).json({ message: "Server error", error });
     }
   };
@@ -89,5 +93,6 @@ class usercontroller {
       console.log("error");
     }
   };
+
 }
 module.exports = usercontroller;
