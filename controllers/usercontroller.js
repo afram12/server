@@ -42,9 +42,7 @@ class usercontroller {
                 return res.status(400).json({ message: "Invalid credentials " })
             }
             //token create
-            var token = jwt.sign({ ID: user._id }, process.env.JWT_SECRET,
-                {expiresIn: "2d"}
-            );
+            var token = jwt.sign({ ID: user._id }, process.env.JWT_SECRET, { expiresIn: "2d" });
             // console.log(token)
 
             //send token in http-only cookie
