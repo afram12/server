@@ -43,7 +43,7 @@ class usercontroller {
             }
             //token create
             var token = jwt.sign({ ID: user._id }, process.env.JWT_SECRET, { expiresIn: "2d" });
-            // console.log(token)
+            console.log(token)
 
             //send token in http-only cookie
             res.cookie("token", token, {
